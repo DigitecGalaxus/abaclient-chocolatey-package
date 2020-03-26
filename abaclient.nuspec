@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>abaclient</id>
+    <version>2.1.600</version>
+    <packageSourceUrl>https://github.com/BWalti/abaclient-chocolatey-package</packageSourceUrl>
+    <owners>bibolorean</owners>
+
+    <title>abaclient (Install)</title>
+    <authors>Abacus Research AG</authors>
+    <projectUrl>https://classic.abacus.ch/downloads-page/abaclient/</projectUrl>
+    <iconUrl>https://rawcdn.githack.com/BWalti/abaclient-chocolatey-package/226f0ec24d2c3d6f8406c028443842f7982cc8e3/logo_abacus.png</iconUrl>
+    <copyright>Abacus Business Software (2018)</copyright>
+    <licenseUrl>https://classic.abacus.ch/downloads-page/lizenzbestimmungen/</licenseUrl>
+    <!-- <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
+    <docsUrl>https://classic.abacus.ch/downloads/applikationen/abaclient/abaclient_kurzreferenz_v2.1_de.pdf</docsUrl>
+    <tags>abaclient abacus</tags>
+    <summary>AbaClient - log-in into your AbaWeb</summary>
+    <description>AbaClient allows to log-in into your Abacus Business Software or AbaWeb - without any internet browser and without having java installed. This package only works on systems with display language in one of "en", "de", "fr" or "it". (as only install packages for these languages are available)</description>
+	<releaseNotes>https://classic.abacus.ch/downloads-page/neuerungen-in-den-versionen/</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
