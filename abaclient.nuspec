@@ -9,7 +9,7 @@
     <title>abaclient (Install)</title>
     <authors>Abacus Research AG</authors>
     <projectUrl>https://classic.abacus.ch/downloads-page/abaclient/</projectUrl>
-    <iconUrl>https://rawcdn.githack.com/BWalti/abaclient-chocolatey-package/226f0ec24d2c3d6f8406c028443842f7982cc8e3/logo_abacus.png</iconUrl>
+    <iconUrl>https://github.com/BWalti/abaclient-chocolatey-package/raw/master/logo_abacus.png</iconUrl>
     <copyright>Abacus Business Software (2018)</copyright>
     <licenseUrl>https://classic.abacus.ch/downloads-page/lizenzbestimmungen/</licenseUrl>
     <!-- <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
