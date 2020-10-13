@@ -15,7 +15,7 @@ $packageArgs = @{
 
   softwareName  = "ABACUS AbaClient version $version"
 
-  checksum      = '3116777074DFEA05A428564ED1909329D1E21F65A21A7E34DC9F49F14E8E05E4'
+  checksum      = 'CBEED96433DFD0058BE3ED080D60FC926D526D887889F691FBDA570A08373A23'
   checksumType  = 'sha256'
 
   silentArgs    = "/quiet /passive /norestart /l `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
