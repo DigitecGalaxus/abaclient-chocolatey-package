@@ -1,7 +1,7 @@
 ﻿$ErrorActionPreference = 'Stop';
 $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$version = "2.1.600"
+$version = "2.2.672"
 $language = Get-WinSystemLocale | select -ExpandProperty Name | % { $_.substring(0,2) }
 $url = "https://storage.googleapis.com/images.abasky.net/119676df089a90ab3c3004398806433938052586dcd9a6bcacfb0e3e4024f339/$version/abaclient-$version-$language.msi"
 
