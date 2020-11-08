@@ -21,11 +21,34 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.4
+        with:
+          versionSpec: '5.3.x'
+
+      - name: Use GitVersion
+        id: gitversion # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v0.9.4
+
+      - name: Find and Replace Version
+        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ steps.gitversion.NuGetVersionV2 }}/g'' {} \;
+
       - name: Choco Pack
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         with:
           args: pack
-          
-            
       
+      - name: Choco Login
+        uses: crazy-max/ghaction-chocolatey@v1.4.0
+        if: github.ref == 'refs/heads/master'
+        with:
+          args: apikey --key ${{ secrets.CHOCO_API_KEY }} --source https://push.chocolatey.org/
+
+      - name: Choco Push
+        uses: crazy-max/ghaction-chocolatey@v1.4.0
+        if: github.ref == 'refs/heads/master'
+        with:
+          args: push abaclient.${{ steps.gitversion.NuGetVersionV2 }}.nupkg --source https://push.chocolatey.org/ 
+
+
