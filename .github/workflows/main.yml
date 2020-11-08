@@ -21,18 +21,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+   
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune
 
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.4
-        with:
-          versionSpec: '5.3.x'
-
-      - name: Use GitVersion
-        id: gitversion # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v0.9.4
+      - name: GitVersion
+        run: echo "version=$(gitversion /showvariable NuGetVersionV2)" >> $GITHUB_ENV
 
       - name: Find and Replace Version
-        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ steps.gitversion.NuGetVersionV2 }}/g'' {} \;
+        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ env.version }}/g'' {} \;
 
       - name: Choco Pack
         uses: crazy-max/ghaction-chocolatey@v1.4.0
@@ -49,6 +46,6 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         if: github.ref == 'refs/heads/master'
         with:
-          args: push abaclient.${{ steps.gitversion.NuGetVersionV2 }}.nupkg --source https://push.chocolatey.org/ 
+          args: push abaclient.${{ env.version }}.nupkg --source https://push.chocolatey.org/ 
 
 
