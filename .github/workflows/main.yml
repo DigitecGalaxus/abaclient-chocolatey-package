@@ -43,7 +43,7 @@ jobs:
       - name: Choco Pack
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         with:
-          args: pack
+          args: pack --allow-unofficial
 
       - name: Choco Push
         uses: crazy-max/ghaction-chocolatey@v1.4.0
