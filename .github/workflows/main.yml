@@ -25,8 +25,14 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune
 
+      - name: GitVersion (debug)
+        run: gitversion
+
       - name: GitVersion
         run: echo "version=$(gitversion /showvariable NuGetVersionV2)" >> $GITHUB_ENV
+
+      - name: Display Version (debug)
+        run: echo "Trying to use version ${{ env.version }}"
 
       - name: Find and Replace Version
         run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ env.version }}/g'' {} \;
