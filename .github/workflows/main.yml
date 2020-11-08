@@ -23,8 +23,19 @@ jobs:
       - uses: actions/checkout@v2
    
       - name: Fetch all history for all tags and branches
-        run: git fetch --prune
+        run: |
+          git fetch --prune
+          git fetch --tags
+          git branch --create-reflog master origin/master
 
+      - name: Update AssemblyInfo files
+        uses: docker://gittools/gitversion:5.0.2-linux
+        with:
+          args: '-nocache -exec /bin/bash -execargs "-c \"echo $GitVersion_NuGetVersionV2 >> version.txt\""'
+
+      - name: debug version.txt
+        run: cat version.txt
+      
       - name: GitVersion
         run: |
           echo 'version<<EOF' >> $GITHUB_ENV 
