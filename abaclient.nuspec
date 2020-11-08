@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>abaclient</id>
-    <version>2.2.672</version>
+    <version>#{VERSION}#</version>
     <packageSourceUrl>https://github.com/BWalti/abaclient-chocolatey-package</packageSourceUrl>
     <owners>bibolorean</owners>
 
@@ -20,6 +20,6 @@
 	<releaseNotes>https://classic.abacus.ch/downloads-page/neuerungen-in-den-versionen/</releaseNotes>
   </metadata>
   <files>
-    <file src="tools\**" target="tools" />
+    <file src="tools/**" target="tools" />
   </files>
 </package>
