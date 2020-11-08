@@ -43,18 +43,12 @@ jobs:
       - name: Choco Pack
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         with:
-          args: pack
-      
-      - name: Choco Login
-        uses: crazy-max/ghaction-chocolatey@v1.4.0
-        if: github.ref == 'refs/heads/master'
-        with:
-          args: apikey --key ${{ secrets.CHOCO_API_KEY }} --source https://push.chocolatey.org/
+          args: pack --allow-unofficial
 
       - name: Choco Push
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         if: github.ref == 'refs/heads/master'
         with:
-          args: push abaclient.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg --source https://push.chocolatey.org/ 
+          args: push abaclient.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }} --allow-unofficial
 
 
