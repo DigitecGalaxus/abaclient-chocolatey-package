@@ -20,6 +20,6 @@
 	<releaseNotes>https://classic.abacus.ch/downloads-page/neuerungen-in-den-versionen/</releaseNotes>
   </metadata>
   <files>
-    <file src="tools\**" target="tools" />
+    <file src="tools/**" target="tools" />
   </files>
 </package>
