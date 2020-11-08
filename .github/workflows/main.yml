@@ -25,17 +25,17 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune
 
-      - name: GitVersion (debug)
-        run: gitversion
-
       - name: GitVersion
-        run: echo "version=$(gitversion /showvariable NuGetVersionV2)" >> $GITHUB_ENV
+        run: |
+          echo 'version<<EOF' >> $GITHUB_ENV 
+          gitversion /showvariable NuGetVersionV2 >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
       - name: Display Version (debug)
-        run: echo "Trying to use version ${{ env.version }}"
+        run: echo "Trying to use version $version"
 
       - name: Find and Replace Version
-        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ env.version }}/g'' {} \;
+        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/$version/g'' {} \;
 
       - name: Choco Pack
         uses: crazy-max/ghaction-chocolatey@v1.4.0
@@ -52,6 +52,6 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         if: github.ref == 'refs/heads/master'
         with:
-          args: push abaclient.${{ env.version }}.nupkg --source https://push.chocolatey.org/ 
+          args: push abaclient.$version.nupkg --source https://push.chocolatey.org/ 
 
 
