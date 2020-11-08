@@ -21,32 +21,23 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-   
-      - name: Fetch all history for all tags and branches
-        run: |
-          git fetch --prune
-          git fetch --tags
-          git branch --create-reflog master origin/master
-
-      - name: Update AssemblyInfo files
-        uses: docker://gittools/gitversion:5.0.2-linux
         with:
-          args: '-nocache -exec /bin/bash -execargs "-c \"echo $GitVersion_NuGetVersionV2 >> version.txt\""'
-
-      - name: debug version.txt
-        run: cat version.txt
-      
-      - name: GitVersion
-        run: |
-          echo 'version<<EOF' >> $GITHUB_ENV 
-          gitversion /showvariable NuGetVersionV2 >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+          fetch-depth: 0
+            
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.4
+        with:
+          versionSpec: '5.3.x'
+          
+      - name: Use GitVersion
+        id: gitversion # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v0.9.4
 
       - name: Display Version (debug)
-        run: echo "Trying to use version $version"
+        run: echo "Trying to use version ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
 
       - name: Find and Replace Version
-        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/$version/g'' {} \;
+        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ steps.gitversion.outputs.nuGetVersionV2 }}/g'' {} \;
 
       - name: Choco Pack
         uses: crazy-max/ghaction-chocolatey@v1.4.0
@@ -63,6 +54,6 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         if: github.ref == 'refs/heads/master'
         with:
-          args: push abaclient.$version.nupkg --source https://push.chocolatey.org/ 
+          args: push abaclient.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg --source https://push.chocolatey.org/ 
 
 
