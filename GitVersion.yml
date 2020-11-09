@@ -4,5 +4,7 @@ branches:
   release:
     mode: ContinuousDelivery
     tag: preview
+  master:
+    mode: ContinuousDeployment
 ignore:
   sha: []

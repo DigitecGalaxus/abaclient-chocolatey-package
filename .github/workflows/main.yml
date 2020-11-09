@@ -35,10 +35,10 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0.9.4
 
       - name: Display Version (debug)
-        run: echo "Trying to use version ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        run: echo "Trying to use version ${{ steps.gitversion.outputs.AssemblySemFileVer }}"
 
       - name: Find and Replace Version
-        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ steps.gitversion.outputs.nuGetVersionV2 }}/g'' {} \;
+        run: find *.nuspec -type f -exec sed -i ''s/#{VERSION}#/${{ steps.gitversion.outputs.AssemblySemFileVer }}/g'' {} \;
 
       - name: Choco Pack
         uses: crazy-max/ghaction-chocolatey@v1.4.0
@@ -49,6 +49,6 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         if: github.ref == 'refs/heads/master'
         with:
-          args: push abaclient.${{ steps.gitversion.outputs.nuGetVersionV2 }}.nupkg --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }} --allow-unofficial
+          args: push abaclient.${{ steps.gitversion.outputs.AssemblySemFileVer }}.nupkg --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }} --allow-unofficial
 
 
