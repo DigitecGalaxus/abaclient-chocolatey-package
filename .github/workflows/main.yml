@@ -45,10 +45,10 @@ jobs:
         with:
           args: pack --allow-unofficial
 
-      - name: Choco Push
-        uses: crazy-max/ghaction-chocolatey@v1.4.0
-        if: github.ref == 'refs/heads/master'
-        with:
-          args: push abaclient.${{ steps.gitversion.outputs.AssemblySemFileVer }}.nupkg --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }} --allow-unofficial
+      # - name: Choco Push
+      #   uses: crazy-max/ghaction-chocolatey@v1.4.0
+      #   if: github.ref == 'refs/heads/master'
+      #   with:
+      #     args: push abaclient.${{ steps.gitversion.outputs.AssemblySemFileVer }}.nupkg --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }} --allow-unofficial
 
 
