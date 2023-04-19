@@ -1,15 +1,15 @@
 ﻿$ErrorActionPreference = 'Stop';
 $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$version = "2.5.850"
+$version = "3.0.940"
 $language = (Get-WinSystemLocale | select -ExpandProperty Name | % { $_.substring(0,2) }).ToLower()
-$url = "https://storage.googleapis.com/images.abasky.net/119676df089a90ab3c3004398806433938052586dcd9a6bcacfb0e3e4024f339/$version/abaclient-$version-$language.msi"
+$url = "https://downloads.abacus.ch/fileadmin/ablage/dokumente/05_abaclient/abaclient-$version-$language.msi"
 
 $checksums = @{
-  en = '965B85D0CF36809BDAFE842FEE2CFA982B827551FF0134E64A9D5194354C2C6B'
-  de = '11D13884EC72E0A6FEE6523DF7C73D5EB56489B2BF2CA0F566C4D5B0CFD6A6F4'
-  fr = '9CDB78D62371893ABB3B1A19FB11809617C1ABABD48C19AD27A64537F278B2EC'
-  it = '38DAE4B38DC8E3CEB76A507C24E36D9C3300F567100B49E8EE87AE94D5B6556B'
+  en = 'a5abc89b5084a5d1bf96e3cf9d401748f062564a2421d883ca80792de761822a'
+  de = '497da4cc77207f9e349fb10f60f9d549b93657a596ee343a127e39d41ba1ad0e'
+  fr = 'abeb6369c691bb8fc014ad10815cc95a396a2f9c6c96bb154e08bb57aed4c25d'
+  it = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 }
 
 $packageArgs = @{
