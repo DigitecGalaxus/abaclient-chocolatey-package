@@ -3,13 +3,13 @@
   <metadata>
     <id>abaclient</id>
     <version>#{VERSION}#</version>
-    <packageSourceUrl>https://github.com/BWalti/abaclient-chocolatey-package</packageSourceUrl>
+    <packageSourceUrl>https://github.com/DigitecGalaxus/abaclient-chocolatey-package</packageSourceUrl>
     <owners>bibolorean</owners>
 
     <title>abaclient (Install)</title>
     <authors>Abacus Research AG</authors>
     <projectUrl>https://downloads.abacus.ch/en/downloads/abaclient/</projectUrl>
-    <iconUrl>https://github.com/BWalti/abaclient-chocolatey-package/raw/master/logo_abacus.png</iconUrl>
+    <iconUrl>https://github.com/DigitecGalaxus/abaclient-chocolatey-package/raw/master/logo_abacus.png</iconUrl>
     <copyright>Abacus Business Software (2018)</copyright>
     <licenseUrl>https://downloads.abacus.ch/en/downloads/general-terms-and-conditions</licenseUrl>
     <!-- <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
