@@ -50,5 +50,3 @@ jobs:
         if: github.ref == 'refs/heads/master'
         with:
           args: push abaclient.${{ steps.gitversion.outputs.AssemblySemFileVer }}.nupkg --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }} --allow-unofficial
-
-
