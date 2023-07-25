@@ -9,7 +9,7 @@ You can install the AbaClient package using Chocolatey. Make sure you have Choco
 Once Chocolatey is installed, run the following command in your command prompt or PowerShell:
 
 ```bash
-choco install abaclient
+choco upgrade abaclient
 ```
 
 ## Updating the Package
@@ -30,7 +30,7 @@ $checksums = @{
 }
 ```
 
-3. Create a new GitHub tag that matches the new version number. You can use the following Git command to create the tag:
+3. Create a new GitHub tag that matches the new version number. For example:
 ```bash
 git tag 3.0.940
 ```
@@ -41,11 +41,7 @@ git add tools/chocolateyinstall.ps1
 git commit -m "Update version to 3.0.940"
 ```
 
-5. Push the new tag and the committed changes to the remote repository:
-```bash
-git push origin 3.0.940
-git push origin main
-```
+5. Push the committed changes and the new tag (with ``` --tags```) to the remote repository.
 
 GitHub Actions will automatically build and publish the updated package to Chocolatey based on the newly created tag.
 
