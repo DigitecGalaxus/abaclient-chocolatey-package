@@ -6,9 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags: [ '*' ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,7 +26,6 @@ jobs:
       - name: Get Current Git Tag
         run: |
           TAG=$(git describe --abbrev=0 --tags)
-          echo "Current Git Tag: $TAG"
           echo "TAG=$TAG" >> $GITHUB_ENV
 
       - name: Display Version (debug)
