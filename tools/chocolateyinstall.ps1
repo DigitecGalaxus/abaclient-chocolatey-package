@@ -1,15 +1,15 @@
 ﻿$ErrorActionPreference = 'Stop';
 $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-$version = "3.0.940"
+$version = "3.1.987"
 $language = (Get-WinSystemLocale | select -ExpandProperty Name | % { $_.substring(0,2) }).ToLower()
 $url = "https://downloads.abacus.ch/fileadmin/ablage/dokumente/05_abaclient/abaclient-$version-$language.msi"
 
 $checksums = @{
-  en = 'a5abc89b5084a5d1bf96e3cf9d401748f062564a2421d883ca80792de761822a'
-  de = '497da4cc77207f9e349fb10f60f9d549b93657a596ee343a127e39d41ba1ad0e'
-  fr = 'abeb6369c691bb8fc014ad10815cc95a396a2f9c6c96bb154e08bb57aed4c25d'
-  it = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+  en = '48252255CEACF853F7C61BEAC726F3E4B931B6383995B92313E8504AF559D56F'
+  de = 'A1DB971D3B3F72F9C345DDBBAF340CEF0C8010AC0047580602A28E2CE9CD8791'
+  fr = '08305305DE8B6ACE398FAE4F7AD9F5D351DC93DD1B2AF6295DD25F50066311E2'
+  it = '19B9CB03C0AF6AEE9CBEDA87001DFBFC50B866BC8B7E3176B5207796CE2FA932'
 }
 
 $packageArgs = @{
