@@ -1,5 +1,4 @@
 ﻿$ErrorActionPreference = 'Stop';
-$toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
 $version = "3.2.996"
 $language = (Get-WinSystemLocale | select -ExpandProperty Name | % { $_.substring(0,2) }).ToLower()
@@ -13,36 +12,15 @@ $checksums = @{
 }
 
 $packageArgs = @{
-  fullZipPath   = "$toolsDir\abaclient.msi"
   packageName   = $env:ChocolateyPackageName
-  unzipLocation = $toolsDir
   fileType      = 'MSI'
   url           = $url
   file          = "$toolsDir\abaclient-$version-$language.msi"
-
   softwareName  = "ABACUS AbaClient version $version"
-
   checksum      = $checksums[$language]
   checksumType  = 'sha256'
-
   silentArgs    = "/quiet /passive /norestart /l `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
   validExitCodes= @(0, 3010, 1641)
 }
 
-Get-ChocolateyWebFile `
-  -PackageName $packageArgs.packageName `
-  -FileFullPath $packageArgs.file `
-  -Url $packageArgs.url
-
-Get-ChecksumValid `
--File $packageArgs.file `
--Checksum $packageArgs.checksum `
--ChecksumType $packageArgs.checksumType `
--OriginalUrl $packageArgs.url
-
-Install-ChocolateyInstallPackage `
-  -PackageName $packageArgs.packageName `
-  -FileType $packageArgs.fileType `
-  -File $packageArgs.file `
-  -SilentArgs $packageArgs.silentArgs `
-  -ValidExitCodes $packageArgs.validExitCodes
+Install-ChocolateyPackage @packageArgs
