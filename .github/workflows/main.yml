@@ -41,6 +41,6 @@ jobs:
 
       - name: Choco Push
         uses: crazy-max/ghaction-chocolatey@v1.4.0
-        if: github.ref == 'refs/heads/master'
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           args: push abaclient.$TAG.nupkg --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }} --allow-unofficial
