@@ -21,7 +21,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v2 
+        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
         with:
           fetch-depth: 0
 
@@ -32,12 +32,12 @@ jobs:
         run: find . -name "*.nuspec" -type f -exec sed -i "s/#{VERSION}#/$TAG/g" {} \;
 
       - name: Choco Pack
-        uses: crazy-max/ghaction-chocolatey@v1.4.0
+        uses: crazy-max/ghaction-chocolatey@e95d7376beed293c1e73c63c3f26b66593207f56 # v1.4.0
         with:
           args: pack --allow-unofficial
           
       - name: Choco Push
         if: startsWith(github.ref, 'refs/tags/')
-        uses: crazy-max/ghaction-chocolatey@v1.4.0
+        uses: crazy-max/ghaction-chocolatey@e95d7376beed293c1e73c63c3f26b66593207f56 # v1.4.0
         with:
           args: push "abaclient.${{ env.TAG }}.nupkg" --source "https://push.chocolatey.org/" --api-key "${{ secrets.CHOCO_API_KEY }}" --allow-unofficial
