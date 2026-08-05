@@ -7,6 +7,11 @@ name: Publish Chocolatey Package
 on:
   push:
     tags: [ '*' ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to build and push (e.g. 4.3.1194)'
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -15,7 +20,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      TAG: ${{ github.ref_name }}
+      TAG: ${{ inputs.tag || github.ref_name }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -37,7 +42,7 @@ jobs:
           args: pack --allow-unofficial
           
       - name: Choco Push
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         with:
           args: push abaclient.${{ env.TAG }}.nupkg --source "https://push.chocolatey.org/" --api-key "${{ secrets.CHOCO_API_KEY }}" --allow-unofficial
