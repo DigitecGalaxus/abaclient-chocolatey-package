@@ -40,4 +40,4 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         with:
-          args: push "abaclient.${{ env.TAG }}.nupkg" --source "https://push.chocolatey.org/" --api-key "${{ secrets.CHOCO_API_KEY }}" --allow-unofficial
+          args: push abaclient.${{ env.TAG }}.nupkg --source "https://push.chocolatey.org/" --api-key "${{ secrets.CHOCO_API_KEY }}" --allow-unofficial
