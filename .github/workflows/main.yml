@@ -7,6 +7,8 @@ name: Publish Chocolatey Package
 on:
   push:
     tags: [ '*' ]
+  schedule:
+    - cron: '0 6 * * 1'
   workflow_dispatch:
     inputs:
       tag:
@@ -26,23 +28,36 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v2 
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
+      - name: Check for new AbaClient version
+        id: check_version
+        if: github.event_name == 'schedule'
+        run: ./scripts/check-version.sh
+
       - name: Display Version (debug)
+        if: github.event_name != 'schedule' || steps.check_version.outputs.new_version != ''
         run: echo "Trying to use version $TAG"
 
-      - name: Find and Replace Version
-        run: find . -name "*.nuspec" -type f -exec sed -i "s/#{VERSION}#/$TAG/g" {} \;
+      - name: Replace Version Tokens
+        if: github.event_name != 'schedule' || steps.check_version.outputs.new_version != ''
+        uses: DigitecGalaxus/actions/templating/replace-tokens@v4
+        with:
+          sources: |
+            *.nuspec
+            tools/chocolateyinstall.ps1
+          variables: '{"VERSION":"${{ env.TAG }}"}'
 
       - name: Choco Pack
+        if: github.event_name != 'schedule' || steps.check_version.outputs.new_version != ''
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         with:
           args: pack --allow-unofficial
-          
+
       - name: Choco Push
-        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        if: (github.event_name != 'schedule' || steps.check_version.outputs.new_version != '') && (startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
         uses: crazy-max/ghaction-chocolatey@v1.4.0
         with:
           args: push abaclient.${{ env.TAG }}.nupkg --source "https://push.chocolatey.org/" --api-key "${{ secrets.CHOCO_API_KEY }}" --allow-unofficial
