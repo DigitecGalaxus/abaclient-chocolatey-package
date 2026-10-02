@@ -1,8 +1,6 @@
 $ErrorActionPreference = 'Stop';
 
 $version = "4.3.1194"
-$language = (Get-WinSystemLocale | select -ExpandProperty Name | % { $_.substring(0,2) }).ToLower()
-$url = "https://downloads.abacus.ch/fileadmin/ablage/dokumente/05_abaclient/abaclient-$version-$language.msi"
 
 $checksums = @{
   en = 'D42AB865C40F8BFA7BA3432EBE09D0ED8421932003E0DC9DE4A625C8A02D2AF7'
@@ -11,6 +9,37 @@ $checksums = @{
   it = 'FF64DFF74C517288C750602198D832076726920422C29D47708EA348ED7B271D'
 }
 
+# Accepted values for /Language (hashtable keys are case-insensitive)
+$languageAliases = @{
+  en = 'en'; english = 'en'
+  de = 'de'; german  = 'de'
+  fr = 'fr'; french  = 'fr'
+  it = 'it'; italian = 'it'
+}
+
+$pp = Get-PackageParameters
+$language = $null
+
+if ($pp['Language'] -is [string] -and $pp['Language'].Trim()) {
+  $requested = $pp['Language'].Trim().ToLower()
+  $language = $languageAliases[$requested]
+  if (!$language) {
+    throw "Unsupported value '$requested' for /Language. Accepted values: $(($languageAliases.Keys | Sort-Object) -join ', ')."
+  }
+} else {
+  if ($pp.ContainsKey('Language')) {
+    Write-Warning "/Language was passed without a value, detecting language from the system locale instead."
+  }
+  $language = (Get-WinSystemLocale).Name.Substring(0, 2).ToLower()
+  if (!$checksums.ContainsKey($language)) {
+    Write-Warning "No AbaClient installer is available for system locale language '$language', using 'en'. Use --params `"'/Language:<en|de|fr|it>'`" to choose a language."
+    $language = 'en'
+  }
+}
+
+Write-Host "Installing AbaClient language '$language'"
+
+$url = "https://downloads.abacus.ch/fileadmin/ablage/dokumente/05_abaclient/abaclient-$version-$language.msi"
 $checksum = $checksums[$language]
 
 Install-ChocolateyPackage -packageName $env:ChocolateyPackageName `
@@ -20,4 +49,4 @@ Install-ChocolateyPackage -packageName $env:ChocolateyPackageName `
   -checksum $checksum `
   -checksumType 'sha256' `
   -silentArgs "/quiet /passive /norestart /l `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`"" `
-  -validExitCodes= @(0, 3010, 1641)
+  -validExitCodes @(0, 3010, 1641)

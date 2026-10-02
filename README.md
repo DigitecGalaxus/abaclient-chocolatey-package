@@ -12,6 +12,21 @@ Once Chocolatey is installed, run the following command in your command prompt o
 choco upgrade abaclient
 ```
 
+### Choosing the installer language
+AbaClient installers are available in English, German, French and Italian. By default the language is detected from the Windows system locale; locales without an installer fall back to English.
+
+To choose the language explicitly, use the `/Language` package parameter. Accepted values (case-insensitive): `en` / `english`, `de` / `german`, `fr` / `french`, `it` / `italian`.
+
+```bash
+choco upgrade abaclient --params "'/Language:english'"
+```
+
+Chocolatey does not remember package parameters on upgrade by default. Pass `--params` on every upgrade, or enable:
+
+```bash
+choco feature enable -n useRememberedArgumentsForUpgrades
+```
+
 ## Updating the Package
 To release a new version of the AbaClient package, follow these steps:
 

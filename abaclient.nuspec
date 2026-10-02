@@ -16,7 +16,17 @@
     <docsUrl>https://downloads.abacus.ch/en/downloads/abaconnect/documentation</docsUrl>
     <tags>abaclient abacus</tags>
     <summary>AbaClient - log-in into your AbaWeb</summary>
-    <description>AbaClient allows to log-in into your Abacus Business Software or AbaWeb - without any internet browser and without having java installed. This package only works on systems with display language in one of "en", "de", "fr" or "it". (as only install packages for these languages are available)</description>
+    <description>AbaClient allows to log-in into your Abacus Business Software or AbaWeb - without any internet browser and without having java installed.
+
+## Package Parameters
+- `/Language:&lt;value&gt;` - Installer language. Accepted values (case-insensitive): `en` / `english`, `de` / `german`, `fr` / `french`, `it` / `italian`.
+
+If no language is given, it is detected from the Windows system locale. Locales without an AbaClient installer fall back to English.
+
+Example: `choco install abaclient --params "'/Language:english'"`
+
+Parameters are not remembered on `choco upgrade` by default. Pass them again, or enable `choco feature enable -n useRememberedArgumentsForUpgrades`.
+</description>
 	  <releaseNotes>Release notes are shown within the application from now on.</releaseNotes>
   </metadata>
   <files>
